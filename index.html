@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indrajit Dutta - Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="calculator-container">
+    <!-- MAIN CALCULATOR -->
+    <div class="calculator-main">
+        <div class="header">
+            <h2>Indrajit Dutta</h2>
+            <span>Scientific</span>
+        </div>
+
+        <!-- The Display is now an interactive input field -->
+        <div class="screen-container">
+            <input type="text" id="display" value="0" autocomplete="off" spellcheck="false">
+        </div>
+
+        <!-- Dedicated Tools Bar -->
+        <div class="tools-bar">
+            <button class="btn-tool" onclick="showTools()">⚙ Shift / Alpha Tools</button>
+        </div>
+
+        <!-- Perfectly Aligned 4-Column Grid -->
+        <div class="buttons">
+            <button class="btn-func" onclick="insert('log(')">log</button>
+            <button class="btn-func" onclick="insert('ln(')">ln</button>
+            <button class="btn-func" onclick="insert('(')">(</button>
+            <button class="btn-func" onclick="insert(')')">)</button>
+
+            <button class="btn-func" onclick="insert('sin(')">sin</button>
+            <button class="btn-func" onclick="insert('cos(')">cos</button>
+            <button class="btn-func" onclick="insert('tan(')">tan</button>
+            <button class="btn-func" onclick="insert('√(')">√</button>
+
+            <button class="btn-func" onclick="insert('²')">x²</button>
+            <button class="btn-del" onclick="deleteChar()">DEL</button>
+            <button class="btn-ac" onclick="clearDisplay()">AC</button>
+            <button class="btn-op" onclick="insert('÷')">÷</button>
+
+            <button class="btn-num" onclick="insert('7')">7</button>
+            <button class="btn-num" onclick="insert('8')">8</button>
+            <button class="btn-num" onclick="insert('9')">9</button>
+            <button class="btn-op" onclick="insert('×')">×</button>
+
+            <button class="btn-num" onclick="insert('4')">4</button>
+            <button class="btn-num" onclick="insert('5')">5</button>
+            <button class="btn-num" onclick="insert('6')">6</button>
+            <button class="btn-op" onclick="insert('−')">−</button>
+
+            <button class="btn-num" onclick="insert('1')">1</button>
+            <button class="btn-num" onclick="insert('2')">2</button>
+            <button class="btn-num" onclick="insert('3')">3</button>
+            <button class="btn-op" onclick="insert('+')">+</button>
+
+            <button class="btn-num" onclick="insert('0')">0</button>
+            <button class="btn-num" onclick="insert('.')">.</button>
+            <button class="btn-func" onclick="insertAns()">Ans</button>
+            <button class="btn-eq" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <!-- ADVANCED SIDEBAR -->
+    <div id="tools" class="calculator-sidebar">
+        <h3>Advanced Tools</h3>
+        <div class="sidebar-scroll">
+            <div class="sidebar-buttons">
+                <button class="btn-func" onclick="insert('⁻¹')">x⁻¹</button>
+                <button class="btn-func" onclick="insert('³')">x³</button>
+                <button class="btn-func" onclick="insert('^')">xʸ</button>
+                
+                <button class="btn-func" onclick="insert('ab/c(')">a b/c</button>
+                <button class="btn-func" onclick="insert('d/c(')">d/c</button>
+                <button class="btn-func" onclick="insert('-')">(-)</button>
+
+                <button class="btn-func" onclick="insert('∛(')">∛</button>
+                <button class="btn-func" onclick="insert('x√(')">x√</button>
+                <button class="btn-func" onclick="insert('10^')">10ˣ</button>
+                
+                <button class="btn-func" onclick="insert('e^')">eˣ</button>
+                <button class="btn-func" onclick="insert('×10^')">×10ˣ</button>
+                <button class="btn-func" onclick="insert('%')">%</button>
+
+                <button class="btn-func" onclick="insert('asin(')">sin⁻¹</button>
+                <button class="btn-func" onclick="insert('acos(')">cos⁻¹</button>
+                <button class="btn-func" onclick="insert('atan(')">tan⁻¹</button>
+                
+                <button class="btn-func" onclick="insert('sinh(')">sinh</button>
+                <button class="btn-func" onclick="insert('cosh(')">cosh</button>
+                <button class="btn-func" onclick="insert('tanh(')">tanh</button>
+
+                <button class="btn-op" onclick="memoryPlus()">M+</button>
+                <button class="btn-op" onclick="memoryMinus()">M−</button>
+                <button class="btn-op" onclick="memoryRecall()">RCL</button>
+                
+                <button class="btn-op" onclick="insert('ENG(')">ENG</button>
+                <button class="btn-func" onclick="insert('Pol(')">Pol(</button>
+                <button class="btn-func" onclick="insert('Rec(')">Rec(</button>
+
+                <button class="btn-func" onclick="insert('P')">nPr</button>
+                <button class="btn-func" onclick="insert('C')">nCr</button>
+                <button class="btn-func" onclick="insert('!')">x!</button>
+                
+                <button class="btn-func" onclick="insert(Math.random().toFixed(4))">Ran#</button>
+                <button class="btn-func" onclick="insert('π')">π</button>
+                <button class="btn-func" onclick="insert('e')">e</button>
+
+                <button class="btn-op" onclick="insert('deg(')">Rad➔Deg</button>
+                <button class="btn-op" onclick="insert('rad(')">Deg➔Rad</button>
+                <button class="btn-op" onclick="insert('dms(')">° ' "</button>
+                <button class="btn-func" onclick="insert(',')">,</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
