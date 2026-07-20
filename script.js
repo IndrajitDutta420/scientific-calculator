@@ -2,18 +2,32 @@ const display = document.getElementById('display');
 let lastAnswer = 0;
 let memory = 0;
 
-// Auto-focus the input and force the cursor to the END of the text
 window.onload = () => {
     display.focus();
     display.selectionStart = display.value.length;
     display.selectionEnd = display.value.length;
 };
 
+// ---- Mobile Mode Toggle ----
+function toggleMobileMode() {
+    const isMobileMode = document.getElementById('mobile-mode-switch').checked;
+    
+    if (isMobileMode) {
+        // Prevents the on-screen virtual keyboard from popping up on mobile
+        display.setAttribute('inputmode', 'none'); 
+    } else {
+        // Allows the keyboard to show up again
+        display.removeAttribute('inputmode');
+    }
+    
+    display.focus();
+}
+
 function showTools() {
     document.getElementById('tools').classList.toggle('active');
 }
 
-// ---- UI Engine (Handles Mouse Clicks) ----
+// ---- UI Engine ----
 function insert(val) {
     display.focus(); 
     
@@ -24,7 +38,6 @@ function insert(val) {
     let start = display.selectionStart;
     let end = display.selectionEnd;
     
-    // If screen is '0' and user clicks a number, overwrite it completely 
     if (display.value === '0' && end <= 1) {
         if (!['×', '÷', '+', '−', '^', 'P', 'C', '!', '⁻¹', '²', '³'].includes(val)) {
             display.value = val;
@@ -34,7 +47,6 @@ function insert(val) {
         }
     }
 
-    // Insert text safely at the exact cursor position
     display.setRangeText(val, start, end, "end");
 }
 
@@ -78,7 +90,7 @@ function memoryPlus() {
         calculate(); 
         memory += parseFloat(display.value) || 0;
         display.value = "0";
-        display.focus(); // Keep focus active
+        display.focus();
         display.selectionStart = 1;
         display.selectionEnd = 1;
     } catch(e) {}
@@ -89,7 +101,7 @@ function memoryMinus() {
         calculate();
         memory -= parseFloat(display.value) || 0;
         display.value = "0";
-        display.focus(); // Keep focus active
+        display.focus();
         display.selectionStart = 1;
         display.selectionEnd = 1;
     } catch(e) {}
@@ -119,7 +131,6 @@ function calculate() {
     let exp = display.value;
     if (!exp || exp === 'Error') return;
 
-    // Convert display symbols into standard JavaScript math symbols
     exp = exp.replace(/×10\^/g, '*10**')
              .replace(/×/g, '*')
              .replace(/÷/g, '/')
@@ -178,7 +189,6 @@ function calculate() {
         display.value = result.toString();
         lastAnswer = result; 
         
-        // Fix: Instantly grab focus back to the input box and move cursor to the end
         display.focus();
         display.selectionStart = display.value.length;
         display.selectionEnd = display.value.length;
@@ -209,7 +219,7 @@ display.addEventListener('input', function() {
     }
 });
 
-// ---- KEYBOARD ACTION HANDLER (Enter & Escape) ----
+// ---- KEYBOARD ACTION HANDLER ----
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' || event.key === '=') {
         calculate();
