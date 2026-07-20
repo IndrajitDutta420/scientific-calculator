@@ -16,14 +16,20 @@
             <span>Scientific</span>
         </div>
 
-        <!-- The Display is now an interactive input field -->
         <div class="screen-container">
             <input type="text" id="display" value="0" autocomplete="off" spellcheck="false">
         </div>
 
-        <!-- Dedicated Tools Bar -->
+        <!-- Tools Bar with Mobile Mode Toggle -->
         <div class="tools-bar">
             <button class="btn-tool" onclick="showTools()">⚙ Shift / Alpha Tools</button>
+            <div class="mobile-toggle" title="Turn on to hide mobile keyboard">
+                <span class="mode-label">📱 Mobile Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="mobile-mode-switch" onchange="toggleMobileMode()">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
 
         <!-- Perfectly Aligned 4-Column Grid -->
