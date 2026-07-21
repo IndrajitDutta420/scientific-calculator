@@ -12,7 +12,7 @@
 <br />
 
 <!-- 💡 TIP: Upload an image of your calculator named "screenshot.png" to your repository to make this image appear! -->
-<img src="screenshot.png" alt="Scientific Calculator Interface" width="700" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+<img src="Screenshot 2026-07-21 185306.png" alt="Scientific Calculator Interface" width="700" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
 
 </div>
 
