@@ -1,51 +1,83 @@
-# 🧮 Indrajit Dutta - Advanced Scientific Calculator
+<div align="center">
+  
+# 🧮 Advanced Scientific Calculator
+*A high-performance, dependency-free computation engine built natively for the modern web.*
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live_Site-0a84ff?style=for-the-badge&logo=github)](https://indrajitdutta420.github.io/scientific-calculator/)
-[![Made with HTML/CSS/JS](https://img.shields.io/badge/Made_with-Vanilla_Web_Tech-fbc531?style=for-the-badge&logo=javascript)](#)
+[![Live Demo](https://img.shields.io/badge/🔴_Live_Demo-0a84ff?style=for-the-badge)](https://indrajitdutta420.github.io/scientific-calculator/)
+[![Vanilla JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](#)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](#)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-4cd137?style=for-the-badge)](#)
 
-A sleek, highly capable web-based scientific calculator inspired by professional hardware models. Built from the ground up with zero external dependencies, this application leverages pure JavaScript to execute complex mathematical parsing, ensuring lightning-fast performance and precision. 
+<br />
 
-Engineered to handle the rigorous calculations required in advanced technical studies—from evaluating Boolean algebra parameters to solving complex numerical methods—this tool balances a clean, accessible main interface with a robust suite of advanced functions.
+<!-- 💡 TIP: Upload an image of your calculator named "screenshot.png" to your repository to make this image appear! -->
+<img src="screenshot.png" alt="Scientific Calculator Interface" width="700" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+
+</div>
+
+---
+
+## 📑 Table of Contents
+1. [Live Preview](#-live-preview)
+2. [Engineering Highlights](#-engineering-highlights--architecture)
+3. [Mathematical Toolset](#-mathematical-toolset)
+4. [UI/UX Design Specs](#-uiux-design-specs)
+5. [Local Installation](#️-local-installation)
+6. [License](#-license)
 
 ---
 
 ## 🔗 Live Preview
-**[Click here to use the live calculator](https://indrajitdutta420.github.io/scientific-calculator/)**
+Access the fully functional web application here:  
+**👉 [indrajitdutta420.github.io/scientific-calculator](https://indrajitdutta420.github.io/scientific-calculator/)**
 
 ---
 
-## ✨ Core Features
+## 🚀 Engineering Highlights & Architecture
 
-* **Interactive Native Display:** Features a fully editable, cursor-aware input screen. Click anywhere in the expression to edit, drag to highlight, or use keyboard arrows for precision navigation.
-* **Smart Keyboard Integration:** Seamless physical keyboard support for rapid data entry. Automatically converts standard keystrokes (like `*` and `/`) into aesthetic mathematical operators (`×`, `÷`) in real-time.
-* **Expandable Toolset:** A smooth, sliding side-panel houses "Shift / Alpha" tools, keeping the main 4-column UI uncluttered while offering immediate access to advanced operators.
-* **Memory Management:** Natively supports standard memory storage (`M+`, `M-`) and recall (`RCL`), as well as an `Ans` key that dynamically pulls the result of the previous calculation.
-* **Responsive Dark UI:** A professional, high-contrast dark mode palette designed to reduce eye strain during extended study or development sessions.
+Bypassing static layouts and bulky frameworks (like `Math.js`), this project was engineered from the ground up to solve complex UI/UX and parsing challenges natively.
 
-## 🧰 Mathematical Capabilities
+### ⚡ Native DOM Cursor Manipulation
+The calculator display is a fully interactive input node, not a static string.
+* **Precision Injection:** Utilizes the `HTMLInputElement.setRangeText()` API combined with `selectionStart` and `selectionEnd` offset tracking. Users can click anywhere in a complex equation to inject or delete data non-destructively.
+* **Lexical Formatting:** An active event listener intercepts physical keystrokes, instantly mapping raw keyboard characters (`*`, `/`, `-`) to aesthetic Unicode operators (`×`, `÷`, `−`) in real-time.
 
-* **Trigonometry & Hyperbolics:** `sin`, `cos`, `tan`, their inverses (`sin⁻¹`), and hyperbolic variants (`sinh`).
-* **Algebra & Exponents:** Squares, cubes, custom powers (`xʸ`), nth roots (`x√`), and natural/base-10 logarithms.
-* **Combinatorics & Statistics:** Permutations (`nPr`), combinations (`nCr`), factorials (`x!`), and automated random number generation (`Ran#`).
-* **Engineering & Conversions:** `Rad ➔ Deg` and `Deg ➔ Rad` conversions, Engineering notation (`ENG`), Polar/Rectangular coordinate parsing, and standard fraction evaluation.
+### 📱 Frictionless Mobile OS Override
+A major flaw in mobile web calculators is the device's native virtual keyboard pushing the UI off-screen. 
+* **The Solution:** A dedicated **Mobile Mode** toggle dynamically alters the DOM by injecting the `inputmode="none"` attribute. This forces mobile operating systems to keep the cursor active for highlighting while completely suppressing the virtual keyboard, creating a seamless progressive web app (PWA) experience.
 
----
-
-## 💻 Tech Stack
-
-This project is built strictly with vanilla web technologies to ensure maximum compatibility and zero bloat:
-
-* **HTML5:** Semantic structuring and input management.
-* **CSS3:** Custom grid architectures, CSS variables for global theming, and hardware-accelerated transitions.
-* **JavaScript (ES6+):** Custom mathematical evaluation engine built on RegEx string parsing and the native JS `Function` constructor for safe, dependency-free computation.
+### ⚙️ Dependency-Free Parsing Engine
+* **Regex Translation:** Sequential Regular Expressions map visual aesthetic symbols (`²`, `⁻¹`, `∛`, `×10ˣ`) into standard JavaScript arithmetic.
+* **Restricted Execution:** Evaluates expressions within a strictly scoped `Function` constructor, passing in only explicitly allowed helper functions (like `nCr`, `polar`, `fact`) to ensure secure, sandboxed calculations without the security flaws of global `eval()`.
 
 ---
 
-## 🚀 Run Locally
+## 🧰 Mathematical Toolset
 
-To run this project on your local machine, no build tools or package managers are required.
+| Category | Supported Operations |
+| :--- | :--- |
+| **🧠 Core Math** | Addition, Subtraction, Multiplication, Division, Fractions (`a b/c`), Percentages |
+| **📐 Trigonometry** | `sin`, `cos`, `tan`, Inverses (`sin⁻¹`), Hyperbolic variants (`sinh`, `cosh`, `tanh`) |
+| **📈 Algebra** | Squares (`x²`), Cubes (`x³`), Custom Powers (`xʸ`), Roots (`√`, `∛`, `x√`), `log`, `ln` |
+| **🎲 Combinatorics**| Permutations (`nPr`), Combinations (`nCr`), Factorials (`x!`), PRNG (`Ran#`) |
+| **⚙️ Engineering** | `Rad ➔ Deg` conversions, Engineering formatting (`ENG`), Polar/Rectangular Coordinates |
+| **💾 State Memory** | Memory Bank (`M+`, `M-`, `RCL`), Dynamic Previous Answer recall (`Ans`) |
 
-1. Clone the repository:
+---
+
+## 🎨 UI/UX Design Specs
+
+* **Responsive CSS Grid Layout:** The UI architecture is managed via `display: grid`, ensuring mathematical operators align flawlessly across varying viewport widths.
+* **Hardware-Accelerated Sidebar:** Complex tools are housed in a sliding side-panel utilizing `transform` and `transition` cubic-bezier curves to prevent main-thread blocking.
+* **Professional Dark Mode:** Themed using CSS Variables (`:root`) to deliver a high-contrast, low-eyestrain palette specifically designed for extended computation sessions.
+
+---
+
+## ⚙️ Local Installation
+
+No build steps, bundlers, or package managers are required. 
+
+1. **Clone the repository:**
    ```bash
    git clone [https://github.com/indrajitdutta420/scientific-calculator.git](https://github.com/indrajitdutta420/scientific-calculator.git)
