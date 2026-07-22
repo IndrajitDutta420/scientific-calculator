@@ -73,7 +73,13 @@
 
     <!-- ADVANCED SIDEBAR -->
     <div id="tools" class="calculator-sidebar">
-        <h3>Advanced Tools</h3>
+        <!-- NEW: Sidebar Header with Close Button -->
+        <div class="sidebar-header">
+            <button class="btn-close-sidebar" onclick="showTools()" title="Close Tools">✕</button>
+            <h3>Advanced Tools</h3>
+            <div style="width: 32px;"></div> <!-- Spacer to perfectly center the text -->
+        </div>
+
         <div class="sidebar-scroll">
             <div class="sidebar-buttons">
                 <button class="btn-func" onclick="insert('⁻¹')">x⁻¹</button>
