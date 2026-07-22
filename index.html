@@ -73,7 +73,7 @@
 
     <!-- ADVANCED SIDEBAR -->
     <div id="tools" class="calculator-sidebar">
-        <!-- NEW: Sidebar Header with Close Button -->
+        <!-- Sidebar Header with Close Button -->
         <div class="sidebar-header">
             <button class="btn-close-sidebar" onclick="showTools()" title="Close Tools">✕</button>
             <h3>Advanced Tools</h3>
@@ -82,50 +82,60 @@
 
         <div class="sidebar-scroll">
             <div class="sidebar-buttons">
+                <!-- Row 1 -->
                 <button class="btn-func" onclick="insert('⁻¹')">x⁻¹</button>
                 <button class="btn-func" onclick="insert('³')">x³</button>
                 <button class="btn-func" onclick="insert('^')">xʸ</button>
                 
+                <!-- Row 2 -->
                 <button class="btn-func" onclick="insert('ab/c(')">a b/c</button>
                 <button class="btn-func" onclick="insert('d/c(')">d/c</button>
-                <button class="btn-func" onclick="insert('-')">(-)</button>
-
                 <button class="btn-func" onclick="insert('∛(')">∛</button>
+
+                <!-- Row 3 -->
                 <button class="btn-func" onclick="insert('x√(')">x√</button>
                 <button class="btn-func" onclick="insert('10^')">10ˣ</button>
-                
                 <button class="btn-func" onclick="insert('e^')">eˣ</button>
+                
+                <!-- Row 4 -->
                 <button class="btn-func" onclick="insert('×10^')">×10ˣ</button>
                 <button class="btn-func" onclick="insert('%')">%</button>
+                <button class="btn-func" onclick="insert(',')">,</button>
 
+                <!-- Row 5 -->
                 <button class="btn-func" onclick="insert('asin(')">sin⁻¹</button>
                 <button class="btn-func" onclick="insert('acos(')">cos⁻¹</button>
                 <button class="btn-func" onclick="insert('atan(')">tan⁻¹</button>
                 
+                <!-- Row 6 -->
                 <button class="btn-func" onclick="insert('sinh(')">sinh</button>
                 <button class="btn-func" onclick="insert('cosh(')">cosh</button>
                 <button class="btn-func" onclick="insert('tanh(')">tanh</button>
 
+                <!-- Row 7 -->
                 <button class="btn-op" onclick="memoryPlus()">M+</button>
                 <button class="btn-op" onclick="memoryMinus()">M−</button>
                 <button class="btn-op" onclick="memoryRecall()">RCL</button>
                 
+                <!-- Row 8 -->
                 <button class="btn-op" onclick="insert('ENG(')">ENG</button>
                 <button class="btn-func" onclick="insert('Pol(')">Pol(</button>
                 <button class="btn-func" onclick="insert('Rec(')">Rec(</button>
 
+                <!-- Row 9 -->
                 <button class="btn-func" onclick="insert('P')">nPr</button>
                 <button class="btn-func" onclick="insert('C')">nCr</button>
                 <button class="btn-func" onclick="insert('!')">x!</button>
                 
+                <!-- Row 10 -->
                 <button class="btn-func" onclick="insert(Math.random().toFixed(4))">Ran#</button>
                 <button class="btn-func" onclick="insert('π')">π</button>
                 <button class="btn-func" onclick="insert('e')">e</button>
 
+                <!-- Row 11 -->
                 <button class="btn-op" onclick="insert('deg(')">Rad➔Deg</button>
                 <button class="btn-op" onclick="insert('rad(')">Deg➔Rad</button>
                 <button class="btn-op" onclick="insert('dms(')">° ' "</button>
-                <button class="btn-func" onclick="insert(',')">,</button>
             </div>
         </div>
     </div>
