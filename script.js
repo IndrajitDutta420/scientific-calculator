@@ -13,10 +13,8 @@ function toggleMobileMode() {
     const isMobileMode = document.getElementById('mobile-mode-switch').checked;
     
     if (isMobileMode) {
-        // Prevents the on-screen virtual keyboard from popping up on mobile
         display.setAttribute('inputmode', 'none'); 
     } else {
-        // Allows the keyboard to show up again
         display.removeAttribute('inputmode');
     }
     
@@ -200,7 +198,23 @@ function calculate() {
     }
 }
 
-// ---- NATIVE KEYBOARD TYPING HANDLER ----
+// ---- STRICT KEYBOARD FILTER (BLOCKS LETTERS) ----
+display.addEventListener('keydown', function(event) {
+    // 1. Allow functional keys (Backspace, Arrow keys, Delete, Tab) and shortcuts (Ctrl+C, Ctrl+V)
+    if (event.key.length > 1 || event.ctrlKey || event.metaKey) {
+        return; 
+    }
+
+    // 2. Define exactly what single characters are allowed to be typed
+    const allowedCharacters = /^[0-9\+\-\*\/\.\(\)\^!%=]$/;
+
+    // 3. If the user types a letter (like 'a') that is not in the allowed list, block it instantly
+    if (!allowedCharacters.test(event.key)) {
+        event.preventDefault(); 
+    }
+});
+
+// ---- NATIVE KEYBOARD TYPING HANDLER (FORMATTING) ----
 display.addEventListener('input', function() {
     let cursor = display.selectionStart;
     let originalValue = display.value;
@@ -219,7 +233,7 @@ display.addEventListener('input', function() {
     }
 });
 
-// ---- KEYBOARD ACTION HANDLER ----
+// ---- KEYBOARD ACTION HANDLER (ENTER / ESCAPE) ----
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' || event.key === '=') {
         calculate();
