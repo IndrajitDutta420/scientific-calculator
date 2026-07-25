@@ -9,10 +9,6 @@
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-4cd137?style=for-the-badge)](#)
 
-<br />
-
-<!-- 💡 TIP: Upload an image of your calculator named "screenshot.png" to your repository to make this image appear! -->
-<img src="Screenshot 2026-07-21 185306.png" alt="Scientific Calculator Interface" width="700" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
 
 </div>
 
