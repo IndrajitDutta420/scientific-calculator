@@ -42,15 +42,12 @@ function insert(val) {
             display.selectionStart = display.value.length;
             display.selectionEnd = display.value.length;
             
-            // Force the input formatter to run so buttons become superscripts instantly
             display.dispatchEvent(new Event('input')); 
             return;
         }
     }
 
     display.setRangeText(val, start, end, "end");
-    
-    // Force the input formatter to run so buttons become superscripts instantly
     display.dispatchEvent(new Event('input')); 
 }
 
@@ -135,21 +132,35 @@ function calculate() {
     let exp = display.value;
     if (!exp || exp === 'Error') return;
 
-    // NEW: Safely converts any beautiful superscripts back to standard math (e.g. ¹⁴ becomes **(14))
-    exp = exp.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, match => {
-        let standard = match.replace(/⁰/g, '0').replace(/¹/g, '1').replace(/²/g, '2')
-                            .replace(/³/g, '3').replace(/⁴/g, '4').replace(/⁵/g, '5')
-                            .replace(/⁶/g, '6').replace(/⁷/g, '7').replace(/⁸/g, '8')
-                            .replace(/⁹/g, '9').replace(/⁻/g, '-');
+    // Map to translate beautiful superscripts back to standard math symbols
+    const reverseSuperMap = {
+        '⁰':'0', '¹':'1', '²':'2', '³':'3', '⁴':'4', '⁵':'5', 
+        '⁶':'6', '⁷':'7', '⁸':'8', '⁹':'9', '⁻':'−', '⁺':'+', 
+        'ˣ':'×', '·':'.'
+    };
+
+    // 1. Translates Parenthesized Exponents (e.g. ⁽³⁺⁵⁾ becomes **(3+5) )
+    exp = exp.replace(/⁽([^⁾]*)⁾?/g, (match, inner) => {
+        let standard = inner.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺ˣ·]/g, char => reverseSuperMap[char] || char);
         return '**(' + standard + ')';
     });
 
-    exp = exp.replace(/×/g, '*')
+    // 2. Translates Simple Exponents (e.g. ³⁴ becomes **(34) )
+    exp = exp.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, match => {
+        let standard = match.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/g, char => reverseSuperMap[char] || char);
+        return '**(' + standard + ')';
+    });
+
+    exp = exp.replace(/×10\^/g, '*10**')
+             .replace(/×/g, '*')
              .replace(/÷/g, '/')
              .replace(/−/g, '-')
              .replace(/π/g, 'Math.PI')
              .replace(/e/g, 'Math.E')
              .replace(/Ans/g, lastAnswer)
+             .replace(/²/g, '**2')
+             .replace(/³/g, '**3')
+             .replace(/⁻¹/g, '**-1')
              .replace(/\^/g, '**');
 
     exp = exp.replace(/sin\(/g, 'Math.sin(')
@@ -207,18 +218,12 @@ function calculate() {
     }
 }
 
-// ---- STRICT KEYBOARD FILTER (BLOCKS LETTERS) ----
+// ---- STRICT KEYBOARD FILTER ----
 display.addEventListener('keydown', function(event) {
-    if (event.key.length > 1 || event.ctrlKey || event.metaKey) {
-        return; 
-    }
-
-    if (event.key === ',') {
-        return;
-    }
+    if (event.key.length > 1 || event.ctrlKey || event.metaKey) return; 
+    if (event.key === ',') return;
 
     const allowedCharacters = /^[0-9\+\-\*\/\.\(\)\^!%=]$/;
-
     if (!allowedCharacters.test(event.key)) {
         event.preventDefault(); 
     }
@@ -230,20 +235,29 @@ display.addEventListener('input', function() {
     let originalValue = display.value;
 
     let newValue = originalValue.replace(/^0+(?=\d)/, '');
+    newValue = newValue.replace(/\*/g, '×').replace(/\//g, '÷').replace(/-/g, '−');
 
-    newValue = newValue.replace(/\*/g, '×')
-                       .replace(/\//g, '÷')
-                       .replace(/-/g, '−');
-
-    // MAGIC SUPERSCRIPT ENGINE: Automatically converts typed numbers into exponents
-    const superMap = {'0':'⁰', '1':'¹', '2':'²', '3':'³', '4':'⁴', '5':'⁵', '6':'⁶', '7':'⁷', '8':'⁸', '9':'⁹', '−':'⁻'};
+    // MAGIC SUPERSCRIPT ENGINE 2.0 (Now with grouped parenthesis support)
+    const superMap = {
+        '0':'⁰', '1':'¹', '2':'²', '3':'³', '4':'⁴', '5':'⁵', 
+        '6':'⁶', '7':'⁷', '8':'⁸', '9':'⁹', '−':'⁻', '-': '⁻',
+        '+':'⁺', '(':'⁽', ')':'⁾', '×':'ˣ', '÷':'÷', '.':'·'
+    };
     
-    // 1. Instantly floats any number typed directly after a ^ symbol
+    // 1. Instantly floats parentheses typed directly after a ^ symbol
+    newValue = newValue.replace(/\^\(/g, '⁽');
+    
+    // 2. Instantly floats simple numbers/minus directly after a ^ symbol
     newValue = newValue.replace(/\^([0-9−])/g, (m, p1) => superMap[p1]);
     
-    // 2. Keeps chaining superscripts together (so 14 becomes ¹⁴)
+    // 3. Keeps chaining basic numbers together 
     while (/([⁰¹²³⁴⁵⁶⁷⁸⁹⁻])([0-9−])/.test(newValue)) {
         newValue = newValue.replace(/([⁰¹²³⁴⁵⁶⁷⁸⁹⁻])([0-9−])/g, (m, p1, p2) => p1 + superMap[p2]);
+    }
+    
+    // 4. ADVANCED GROUPING: Formats entire expressions inside the ⁽ ⁾ brackets!
+    while (/(⁽[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺ˣ·÷]*)([0-9−\+\×\÷\(\)\.])/.test(newValue)) {
+        newValue = newValue.replace(/(⁽[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺ˣ·÷]*)([0-9−\+\×\÷\(\)\.])/g, (m, p1, p2) => p1 + (superMap[p2] || p2));
     }
 
     if (originalValue !== newValue) {
@@ -254,7 +268,7 @@ display.addEventListener('input', function() {
     }
 });
 
-// ---- KEYBOARD ACTION HANDLER (ENTER / ESCAPE) ----
+// ---- KEYBOARD ACTION HANDLER ----
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' || event.key === '=') {
         calculate();
