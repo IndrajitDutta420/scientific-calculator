@@ -82,17 +82,20 @@
 
         <div class="sidebar-scroll">
             
-            <!-- Real-Time Angle Converter -->
+            <!-- Real-Time Angle Converter (Beautiful UI) -->
             <div class="converter-box">
+                <div class="converter-title">📐 Angle Converter</div>
                 <div class="converter-inputs">
                     <div class="input-group">
+                        <label>DEGREE</label>
                         <input type="number" id="conv-deg" placeholder="0" oninput="convertAngle('deg')">
-                        <label>Degree</label>
                     </div>
-                    <span class="equals">=</span>
+                    
+                    <div class="swap-badge">⇄</div>
+                    
                     <div class="input-group">
+                        <label>RADIAN</label>
                         <input type="number" id="conv-rad" placeholder="0" oninput="convertAngle('rad')">
-                        <label>Radian</label>
                     </div>
                 </div>
             </div>
