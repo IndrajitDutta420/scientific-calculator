@@ -82,77 +82,81 @@
 
         <div class="sidebar-scroll">
             
-            <!-- Real-Time Angle Converter (Beautiful UI) -->
+            <!-- UNIVERSAL CONVERTER (Based on Sketch) -->
             <div class="converter-box">
-                <div class="converter-title">📐 Angle Converter</div>
-                <div class="converter-inputs">
-                    <div class="input-group">
-                        <label>DEGREE</label>
-                        <input type="number" id="conv-deg" placeholder="0" oninput="convertAngle('deg')">
+                <!-- Top Category Selector -->
+                <select id="conv-category" class="conv-select-main" onchange="initConverter()">
+                    <option value="angle">Plane Angle</option>
+                    <option value="area">Area</option>
+                    <option value="length">Length</option>
+                    <option value="mass">Mass</option>
+                    <option value="speed">Speed</option>
+                    <option value="temperature">Temperature</option>
+                    <option value="time">Time</option>
+                    <option value="volume">Volume</option>
+                </select>
+
+                <!-- Inputs and Units Layout -->
+                <div class="converter-body">
+                    <!-- Left Side -->
+                    <div class="converter-side">
+                        <input type="number" id="conv-input1" class="conv-input" placeholder="0" oninput="convertValue(1)">
+                        <select id="conv-unit1" class="conv-select-unit" onchange="convertValue(1)"></select>
                     </div>
                     
-                    <div class="swap-badge">⇄</div>
+                    <!-- Middle Swap Icon -->
+                    <button class="swap-btn" onclick="swapConverter()" title="Swap Units">⇄</button>
                     
-                    <div class="input-group">
-                        <label>RADIAN</label>
-                        <input type="number" id="conv-rad" placeholder="0" oninput="convertAngle('rad')">
+                    <!-- Right Side -->
+                    <div class="converter-side">
+                        <input type="number" id="conv-input2" class="conv-input" placeholder="0" oninput="convertValue(2)">
+                        <select id="conv-unit2" class="conv-select-unit" onchange="convertValue(2)"></select>
                     </div>
                 </div>
             </div>
 
             <!-- 33-Button Grid -->
             <div class="sidebar-buttons">
-                <!-- Row 1 -->
                 <button class="btn-func" onclick="insert('⁻¹')">x⁻¹</button>
                 <button class="btn-func" onclick="insert('³')">x³</button>
                 <button class="btn-func" onclick="insert('^')">xʸ</button>
                 
-                <!-- Row 2 -->
                 <button class="btn-func" onclick="insert('ab/c(')">a b/c</button>
                 <button class="btn-func" onclick="insert('d/c(')">d/c</button>
                 <button class="btn-func" onclick="insert('∛(')">∛</button>
 
-                <!-- Row 3 -->
                 <button class="btn-func" onclick="insert('x√(')">x√</button>
                 <button class="btn-func" onclick="insert('10^')">10ˣ</button>
                 <button class="btn-func" onclick="insert('e^')">eˣ</button>
                 
-                <!-- Row 4 -->
                 <button class="btn-func" onclick="insert('×10^')">×10ˣ</button>
                 <button class="btn-func" onclick="insert('%')">%</button>
                 <button class="btn-func" onclick="insert(',')">,</button>
 
-                <!-- Row 5 -->
                 <button class="btn-func" onclick="insert('asin(')">sin⁻¹</button>
                 <button class="btn-func" onclick="insert('acos(')">cos⁻¹</button>
                 <button class="btn-func" onclick="insert('atan(')">tan⁻¹</button>
                 
-                <!-- Row 6 -->
                 <button class="btn-func" onclick="insert('sinh(')">sinh</button>
                 <button class="btn-func" onclick="insert('cosh(')">cosh</button>
                 <button class="btn-func" onclick="insert('tanh(')">tanh</button>
 
-                <!-- Row 7 -->
                 <button class="btn-op" onclick="memoryPlus()">M+</button>
                 <button class="btn-op" onclick="memoryMinus()">M−</button>
                 <button class="btn-op" onclick="memoryRecall()">RCL</button>
                 
-                <!-- Row 8 -->
                 <button class="btn-op" onclick="insert('ENG(')">ENG</button>
                 <button class="btn-func" onclick="insert('Pol(')">Pol(</button>
                 <button class="btn-func" onclick="insert('Rec(')">Rec(</button>
 
-                <!-- Row 9 -->
                 <button class="btn-func" onclick="insert('P')">nPr</button>
                 <button class="btn-func" onclick="insert('C')">nCr</button>
                 <button class="btn-func" onclick="insert('!')">x!</button>
                 
-                <!-- Row 10 -->
                 <button class="btn-func" onclick="insert(Math.random().toFixed(4))">Ran#</button>
                 <button class="btn-func" onclick="insert('π')">π</button>
                 <button class="btn-func" onclick="insert('e')">e</button>
 
-                <!-- Row 11 -->
                 <button class="btn-op" onclick="insert('deg(')">Rad➔Deg</button>
                 <button class="btn-op" onclick="insert('rad(')">Deg➔Rad</button>
                 <button class="btn-op" onclick="insert('dms(')">° ' "</button>
