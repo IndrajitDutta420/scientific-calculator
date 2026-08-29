@@ -25,22 +25,17 @@ resizer.addEventListener('mousedown', function(e) {
     document.body.style.cursor = 'ew-resize';
     resizer.classList.add('active-resizer');
     
-    // Disable smooth transition during drag for zero lag
     sidebar.style.transition = 'none'; 
     e.preventDefault(); 
 });
 
 document.addEventListener('mousemove', function(e) {
     if (!isResizing) return;
-    
     let deltaX = startX - e.clientX; 
-    
-    // Because the container is flex-centered, resizing pushes both sides. 
-    // We multiply delta by 2 to keep the resizer perfectly locked under the mouse!
     let newWidth = startWidth + (deltaX * 2);
     
-    if (newWidth < 280) newWidth = 280; // Min width limit
-    if (newWidth > 600) newWidth = 600; // Max width limit
+    if (newWidth < 280) newWidth = 280; 
+    if (newWidth > 600) newWidth = 600; 
     
     document.documentElement.style.setProperty('--sidebar-width', `${newWidth}px`);
 });
@@ -50,8 +45,6 @@ document.addEventListener('mouseup', function() {
         isResizing = false;
         document.body.style.cursor = 'default';
         resizer.classList.remove('active-resizer');
-        
-        // Re-enable smooth transition for the close/open toggle
         sidebar.style.transition = ''; 
     }
 });
@@ -216,17 +209,168 @@ document.addEventListener('keydown', function(event) {
 });
 
 // ==========================================
-//   UNIVERSAL CONVERTER ENGINE (SKETCH UI)
+//   ULTIMATE UNIVERSAL CONVERTER ENGINE 
 // ==========================================
+
 const convertData = {
-    angle: { Degree: 1, Radian: 180 / Math.PI, Gradian: 0.9 },
-    area: { 'Square Meter': 1, 'Square Kilometer': 1000000, 'Square Mile': 2589988.11, Acre: 4046.86, Hectare: 10000, 'Square Foot': 0.092903 },
-    length: { Meter: 1, Kilometer: 1000, Centimeter: 0.01, Millimeter: 0.001, Mile: 1609.34, Yard: 0.9144, Foot: 0.3048, Inch: 0.0254 },
-    mass: { Kilogram: 1, Gram: 0.001, Milligram: 0.000001, 'Metric Ton': 1000, Pound: 0.453592, Ounce: 0.0283495 },
-    speed: { 'Meter per sec': 1, 'Km per hour': 0.277778, 'Miles per hour': 0.44704, Knot: 0.514444 },
-    time: { Second: 1, Minute: 60, Hour: 3600, Day: 86400, Week: 604800, Year: 31536000 },
-    volume: { 'Cubic Meter': 1, Liter: 0.001, Milliliter: 0.000001, Gallon: 0.00378541, Quart: 0.000946353, Pint: 0.000473176 },
-    temperature: { Celsius: 'C', Fahrenheit: 'F', Kelvin: 'K' }
+    angle: {
+        'Degree': 1,
+        'Radian': 180 / Math.PI,
+        'Gradian': 0.9,
+        'Arcsecond': 1 / 3600,
+        'Minute of arc': 1 / 60,
+        'Milliradian': (180 / Math.PI) / 1000
+    },
+    area: {
+        'Square metre': 1,
+        'Square kilometre': 1000000,
+        'Square mile': 2589988.11,
+        'Square yard': 0.836127,
+        'Square foot': 0.092903,
+        'Square inch': 0.00064516,
+        'Hectare': 10000,
+        'Acre': 4046.86
+    },
+    data: {
+        'Bit per second': 1,
+        'Kilobit per second': 1000,
+        'Kilobyte per second': 8000,
+        'Kibibit per second': 1024,
+        'Megabit per second': 1e6,
+        'Megabyte per second': 8e6,
+        'Mebibit per second': 1048576,
+        'Gigabit per second': 1e9,
+        'Gigabyte per second': 8e9,
+        'Gibibit per second': 1073741824,
+        'Terabit per second': 1e12,
+        'Terabyte per second': 8e12,
+        'Tebibit per second': 1099511627776
+    },
+    storage: {
+        'Byte': 1,
+        'Kilobyte': 1000,
+        'Kibibyte': 1024,
+        'Megabyte': 1e6,
+        'Mebibyte': 1048576,
+        'Gigabyte': 1e9,
+        'Gibibyte': 1073741824,
+        'Terabyte': 1e12,
+        'Tebibyte': 1099511627776,
+        'Petabyte': 1e15,
+        'Pebibyte': 1125899906842624,
+        'Kibibit': 128,
+        'Megabit': 125000,
+        'Mebibit': 131072,
+        'Gigabit': 125000000,
+        'Gibibit': 134217728,
+        'Terabit': 125000000000,
+        'Tebibit': 137438953472,
+        'Petabit': 125000000000000,
+        'Pebibit': 140737488355328
+    },
+    energy: {
+        'Joule': 1,
+        'Kilojoule': 1000,
+        'Gram calorie': 4.184,
+        'Kilocalorie': 4184,
+        'Watt hour': 3600,
+        'Kilowatt-hour': 3600000,
+        'Electronvolt': 1.602176634e-19,
+        'British thermal unit': 1055.06,
+        'US therm': 105480400,
+        'Foot-pound': 1.355818
+    },
+    frequency: {
+        'Hertz': 1,
+        'Kilohertz': 1000,
+        'Megahertz': 1e6,
+        'Gigahertz': 1e9
+    },
+    fuel: {
+        'Kilometer per liter': 1,
+        'Mile per US gallon': 0.4251437,
+        'Mile per gallon': 0.354006,
+        'Litre per 100 kilometres': -1 
+    },
+    length: {
+        'Metre': 1,
+        'Kilometre': 1000,
+        'Centimetre': 0.01,
+        'Millimetre': 0.001,
+        'Micrometre': 1e-6,
+        'Nanometre': 1e-9,
+        'Mile': 1609.344,
+        'Yard': 0.9144,
+        'Foot': 0.3048,
+        'Inch': 0.0254,
+        'Nautical mile': 1852
+    },
+    mass: {
+        'Gram': 1,
+        'Kilogram': 1000,
+        'Tonne': 1000000,
+        'Milligram': 0.001,
+        'Microgram': 1e-6,
+        'Imperial ton': 1016046.91,
+        'US ton': 907184.74,
+        'Stone': 6350.29318,
+        'Pound': 453.59237,
+        'Ounce': 28.34952
+    },
+    pressure: {
+        'Pascal': 1,
+        'Bar': 100000,
+        'Pound per square inch': 6894.757,
+        'Standard atmosphere': 101325,
+        'Torr': 133.3224
+    }, 
+    speed: {
+        'Metre per second': 1,
+        'Foot per second': 0.3048,
+        'Kilometre per hour': 0.2777777778,
+        'Mile per hour': 0.44704,
+        'Knot': 0.5144444444
+    },
+    time: {
+        'Nanosecond': 1e-9,
+        'Microsecond': 1e-6,
+        'Millisecond': 0.001,
+        'Second': 1,
+        'Minute': 60,
+        'Hour': 3600,
+        'Day': 86400,
+        'Week': 604800,
+        'Month': 2628000,
+        'Calendar year': 31536000,
+        'Decade': 315360000,
+        'Century': 3153600000
+    },
+    volume: {
+        'Cubic meter': 1,
+        'Litre': 0.001,
+        'Milliliter': 1e-6,
+        'US liquid gallon': 0.00378541,
+        'US liquid quart': 0.000946353,
+        'US liquid pint': 0.000473176,
+        'US legal cup': 0.00024,
+        'US fluid ounce': 2.95735e-5,
+        'US tablespoon': 1.47868e-5,
+        'US teaspoon': 4.92892e-6,
+        'Imperial gallon': 0.00454609,
+        'Imperial quart': 0.00113652,
+        'Imperial pint': 0.000568261,
+        'Imperial cup': 0.000284131,
+        'Imperial fluid ounce': 2.84131e-5,
+        'Imperial tablespoon': 1.77582e-5,
+        'Imperial teaspoon': 5.91939e-6,
+        'Cubic foot': 0.0283168,
+        'Cubic inch': 1.63871e-5
+    },
+    temperature: {
+        'Degree Celsius': 'C',
+        'Fahrenheit': 'F',
+        'Kelvin': 'K'
+    }
 };
 
 function initConverter() {
@@ -237,7 +381,7 @@ function initConverter() {
     select1.innerHTML = select2.innerHTML = '';
     const units = Object.keys(convertData[category]);
     
-    units.forEach(unit => {
+    units.sort().forEach(unit => {
         select1.options.add(new Option(unit, unit));
         select2.options.add(new Option(unit, unit));
     });
@@ -268,11 +412,20 @@ function convertValue(source) {
     let val = parseFloat(fromInput.value), result = 0;
 
     if (category === 'temperature') {
-        let cVal = fromUnit === 'Celsius' ? val : fromUnit === 'Fahrenheit' ? (val - 32) * 5/9 : val - 273.15;
-        result = targetUnit === 'Celsius' ? cVal : targetUnit === 'Fahrenheit' ? (cVal * 9/5) + 32 : cVal + 273.15;
-    } else {
+        let cVal = fromUnit === 'Degree Celsius' ? val : fromUnit === 'Fahrenheit' ? (val - 32) * 5/9 : val - 273.15;
+        result = targetUnit === 'Degree Celsius' ? cVal : targetUnit === 'Fahrenheit' ? (cVal * 9/5) + 32 : cVal + 273.15;
+    } 
+    else if (category === 'fuel') {
+        let baseVal = (fromUnit === 'Litre per 100 kilometres') ? (100 / val) : (val * convertData[category][fromUnit]);
+        result = (targetUnit === 'Litre per 100 kilometres') ? (100 / baseVal) : (baseVal / convertData[category][targetUnit]);
+    } 
+    else {
         result = (val * convertData[category][fromUnit]) / convertData[category][targetUnit];
     }
     
-    targetInput.value = parseFloat(result.toPrecision(7));
+    if (!isFinite(result)) {
+        targetInput.value = (result === Infinity) ? '∞' : '';
+    } else {
+        targetInput.value = parseFloat(result.toPrecision(7));
+    }
 }
