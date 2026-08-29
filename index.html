@@ -9,7 +9,6 @@
 <body>
 
 <div class="calculator-container">
-    <!-- MAIN CALCULATOR -->
     <div class="calculator-main">
         <div class="header">
             <h2>Indrajit Dutta</h2>
@@ -20,7 +19,6 @@
             <input type="text" id="display" value="0" autocomplete="off" spellcheck="false">
         </div>
 
-        <!-- Tools Bar with Mobile Mode Toggle -->
         <div class="tools-bar">
             <button class="btn-tool" onclick="showTools()">⚙ Shift / Alpha Tools</button>
             <div class="mobile-toggle" title="Turn on to hide mobile keyboard">
@@ -32,7 +30,6 @@
             </div>
         </div>
 
-        <!-- Perfectly Aligned 4-Column Grid -->
         <div class="buttons">
             <button class="btn-func" onclick="insert('log(')">log</button>
             <button class="btn-func" onclick="insert('ln(')">ln</button>
@@ -71,12 +68,9 @@
         </div>
     </div>
 
-    <!-- ADVANCED SIDEBAR -->
     <div id="tools" class="calculator-sidebar">
-        <!-- The Drag Handle to Resize -->
         <div class="resizer" id="resizer"></div>
         
-        <!-- Sidebar Header with Close Button -->
         <div class="sidebar-header">
             <button class="btn-close-sidebar" onclick="showTools()" title="Close Tools">✕</button>
             <h3>Advanced Tools</h3>
@@ -84,10 +78,7 @@
         </div>
 
         <div class="sidebar-scroll">
-            
-            <!-- UNIVERSAL CONVERTER -->
             <div class="converter-box">
-                <!-- ALL Categories added perfectly matching your screenshot list -->
                 <select id="conv-category" class="conv-select-main" onchange="initConverter()">
                     <option value="angle">Plane Angle</option>
                     <option value="area">Area</option>
@@ -105,18 +96,14 @@
                     <option value="volume">Volume</option>
                 </select>
 
-                <!-- Inputs and Units Layout -->
                 <div class="converter-body">
-                    <!-- Left Side -->
                     <div class="converter-side">
                         <input type="number" id="conv-input1" class="conv-input" placeholder="0" oninput="convertValue(1)">
                         <select id="conv-unit1" class="conv-select-unit" onchange="convertValue(1)"></select>
                     </div>
                     
-                    <!-- Middle Swap Icon -->
                     <button class="swap-btn" onclick="swapConverter()" title="Swap Units">⇄</button>
                     
-                    <!-- Right Side -->
                     <div class="converter-side">
                         <input type="number" id="conv-input2" class="conv-input" placeholder="0" oninput="convertValue(2)">
                         <select id="conv-unit2" class="conv-select-unit" onchange="convertValue(2)"></select>
@@ -124,7 +111,6 @@
                 </div>
             </div>
 
-            <!-- 33-Button Grid -->
             <div class="sidebar-buttons">
                 <button class="btn-func" onclick="insert('⁻¹')">x⁻¹</button>
                 <button class="btn-func" onclick="insert('³')">x³</button>
