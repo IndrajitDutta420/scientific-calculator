@@ -73,16 +73,19 @@
 
     <!-- ADVANCED SIDEBAR -->
     <div id="tools" class="calculator-sidebar">
+        <!-- The Drag Handle to Resize -->
+        <div class="resizer" id="resizer"></div>
+        
         <!-- Sidebar Header with Close Button -->
         <div class="sidebar-header">
             <button class="btn-close-sidebar" onclick="showTools()" title="Close Tools">✕</button>
             <h3>Advanced Tools</h3>
-            <div style="width: 32px;"></div> <!-- Spacer to center the text -->
+            <div style="width: 32px;"></div>
         </div>
 
         <div class="sidebar-scroll">
             
-            <!-- UNIVERSAL CONVERTER (Based on Sketch) -->
+            <!-- UNIVERSAL CONVERTER -->
             <div class="converter-box">
                 <!-- Top Category Selector -->
                 <select id="conv-category" class="conv-select-main" onchange="initConverter()">
